@@ -27,7 +27,7 @@ Currently, this object is based on a Frequentist approach but may be changed to 
 ## Contribution
 While this is a small pet project, I welcome contribution:
 ~~~
-git clone put_repo_url_here
+git clone (whatever method you prefer)
 ~~~
 ~~~
 cd fivetwo
