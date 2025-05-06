@@ -1,10 +1,10 @@
 ## Background
-This repository is inspired by a card game that I play. As I became more and more familiar with the game, I found myself wondering about all the different methods there are to shuffle a deck and which one randomizes the deck the most, and possibly, how much of an effect these have on the game itself.<br>
+This repository is inspired by a card game that I play.
+As I became more and more familiar with the game, I found myself wondering about all the different methods there are to shuffle a deck and which one randomizes the deck the most, and possibly, how much of an effect these have on the game itself.<br>
 So I decided to model them in the hopes of:
 1. Improving my understanding of the math behind the game I enjoy playing
-2. Learning more about randomness
-3. Improving my methods as a Python developer
-4. Just having fun coding. :grin:
+2. Improving my methods as a Python developer
+3. Just having fun coding. :grin:
 ## Meet the Objects
 Below are short descriptions for each piece of this module.
 ### Deck
@@ -30,8 +30,8 @@ While this is a small pet project, I welcome contribution:
 git clone put_repo_url_here
 ~~~
 ~~~
-cd final_name_of_repo
+cd fivetwo
 ~~~
 ~~~
-pip install . 
+pip install .
 ~~~
