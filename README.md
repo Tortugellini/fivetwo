@@ -33,5 +33,5 @@ git clone (whatever method you prefer)
 cd fivetwo
 ~~~
 ~~~
-pip install .
+poetry install
 ~~~
