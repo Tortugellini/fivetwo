@@ -6,10 +6,13 @@ license = {text = "MIT"}
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
-    "numpy (==1.25.2)"
+    "numpy (==1.25.2)",
+    "ipykernel (>=6.29.5,<7.0.0)",
+    "matplotlib (>=3.10.1,<4.0.0)"
 ]
-
-
+packages = [
+    { include = "fivetwo", from = "src"}
+]
 [build-system]
 requires = ["poetry-core>=2.0.0,<3.0.0"]
 build-backend = "poetry.core.masonry.api"
