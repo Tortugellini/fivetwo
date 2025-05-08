@@ -17,7 +17,7 @@ class Shuffler:
     A class used to apply operations on another class called Deck.
     """
 
-    def __init__(self, number_of_shuffles):
+    def __init__(self, number_of_shuffles: int):
         """Initializing the 'Shuffler' with the number of times the 'Deck' will be shuffled."""
 
         self.number_of_shuffles = number_of_shuffles
@@ -25,8 +25,9 @@ class Shuffler:
 
     def _remember_shuffle(func: Callable):
         """
-        Adds the name of the shuffle technique used to a list in the 'Deck' class
-        to keep a memory of the shuffle techniques used on the 'Deck'.
+        Adds the name of the shuffle technique used and number of times it has been used
+        to a list in the 'Deck' class to keep a memory of the shuffle techniques used on
+        the 'Deck'.
 
         Is used as a decorator for the shuffle methods below.
         ---
@@ -39,17 +40,18 @@ class Shuffler:
             A _wrapper function used to pass the decorator arguments.
             """
 
-            from deck import Deck
+            from src.deck import Deck
 
             # Finding the 'Deck' object in the passed arguments.
             for arg in args:
                 if isinstance(arg, Deck):
-                    cards = arg
+                    deck = arg
 
+            # Updating the shuffle history with the name of the shuffle method used.
             try:
-                cards.shuffle_history[" ".join(func.__name__.split("_"))] += 1
+                deck.shuffle_history[" ".join(func.__name__.split("_"))] += 1
             except KeyError:
-                cards.shuffle_history[func.__name__] = 1
+                deck.shuffle_history[func.__name__] = 1
 
             return func(*args)
 
@@ -86,6 +88,8 @@ class Shuffler:
         a pile of 'n' cards in stack 'A' and 'self.number_of_cards - n' in
         stack 'B'.
         The two stacks are then combined at an index 'm' of stack 'A'.
+
+        # TODO BROKEN! Fix this method!
         ---
         Parameters:
             deck, object: A deck of cards of variable length.
@@ -100,20 +104,16 @@ class Shuffler:
         _stackA = deck.cards[:n]
         stackB = deck.cards[n:]
 
-        print(len(_stackA), len(stackB))
-
         # Recreating 'stackA' with enough space for space to insert all of stackB
         stackA = np.full(2 * len(_stackA), np.nan)
         stackA[::2] = _stackA
-        print(len(stackA))
 
         # Choosing the value of 'm'.
         m = int(random.choice(np.linspace(1, len(stackA) - 1, len(stackA) - 1)))
 
         # Inserting 'stackB' into 'stackA' at index 'm'.
-        print(m)
         if len(stackB) > len(stackA[m:]):
-            print("Conditional 1")
+
             # Adding each card from stackB to stackA.
             for i, value in enumerate(stackA[m:]):
                 if np.isnan(value):
@@ -122,7 +122,7 @@ class Shuffler:
             # Adding the rest of the cards at the end of 'stackA'.
             stackA = np.append(stackA, stackB[i:])
         else:
-            print("Conditional 2")
+
             for j, value in enumerate(stackB):
                 if np.isnan(stackA[m + j]):
                     try:
@@ -139,9 +139,6 @@ class Shuffler:
 
         # Calculating how far each card moved from its original position.
         self._card_displacements(deck)
-
-        # Increasing the number of times that the deck was shuffled by 1.
-        deck.times_shuffled += 1
 
     @_remember_shuffle
     def pile_shuffle(self, deck: object, number_of_piles: int):
@@ -177,23 +174,8 @@ class Shuffler:
         else:
             pass  # TODO Add feature for choosing neither 9 or 11 stacks.
 
-        # "Returning" the deck.
+        # Updating the deck.
         deck.cards = cards
 
         # Calculating how far each card moved from its original position.
         self._card_displacements(deck)
-
-        # Increasing the number of times that the deck was shuffled by 1.
-        deck.times_shuffled += 1
-
-
-# Testing
-if __name__ == "__main__":
-    from deck import Deck
-
-    deck = Deck(99)
-    shuffler = Shuffler(10)
-
-    print(deck.cards)
-    shuffler.mash_shuffle(deck)
-    print(deck.cards)

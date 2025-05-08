@@ -44,9 +44,6 @@ class Deck:
         else:
             self.cards = np.linspace(1, number_of_cards, number_of_cards, dtype=int)
 
-        # Remembering how many times the deck was shuffled.
-        self.times_shuffled = 0
-
         # Making a copy of the deck to remember what it looked like before it was shuffled.
         self.original_state = self.cards
 
@@ -55,9 +52,3 @@ class Deck:
 
         # Keeping track of how much the indices of the cards moved with each shuffle.
         self.index_movement = {}
-
-
-# Testing.
-if __name__ == "__main__":  # Below is for testing.
-    deck = Deck(100)
-    print(deck.cards)
