@@ -16,39 +16,59 @@ class Deck:
     TODO: Write more here later. Perhaps write out some example code.
     """
 
-    def __init__(self, number_of_cards, preshuffled=False):
+    def __init__(self, premade_deck: np.array, preshuffled: bool = False, number_of_cards: int | None = None):
         """
-        Initializes a 'Deck' that is 'number_of_cards' large.
+        Creates a Deck of cards with number values representing each card.
 
-        If 'preshuffled' is True, the array is filled with random integers
-        from 1 to 'number_of_cards' which represent (non-Pythonic) indices
-        of the cards' location in an ordered (non-random) deck.
+        If 'premade_deck' is True, uses the decklist provided as the deck.
+        
+        If 'preshuffled' is True, the array is filled with ranom integers from 1 to 'number_of_cards.'
+        Must provide a value for 'number_of_cards' if 'preshuffled' is set to True.
         ---
         Parameters:
-
+            premade_deck, np.array: A list of cards from a previously created deck.
+            preshuffled, bool: Determines whether to create a randomly ordered deck of cards.
+            number_of_cards, int: The number of cards to put in the created deck.
         """
 
-        # Holding on to the parameters passed.
-        self.number_of_cards = number_of_cards
-        self.preshuffled = preshuffled
-
-        # Constructing the deck.
-        if preshuffled:
-            _cards = []
-
-            while len(_cards) != number_of_cards:
-                rand_ind = random.randint(1, number_of_cards)
-                if rand_ind not in _cards:
-                    _cards.append(rand_ind)
-            self.cards = np.asarray(_cards)
+        if list(premade_deck):
+            self.cards = premade_deck
+        
+        elif preshuffled:
+            self.preshuffled = preshuffled
+            if number_of_cards:
+                self.cards = self._preshuffled(number_of_cards)
+            else:
+                print("Please provide the size of the deck you would like to make.")
         else:
-            self.cards = np.linspace(1, number_of_cards, number_of_cards, dtype=int)
+            if number_of_cards:
+                self.cards = self._standard_deck(number_of_cards)
+            else:
+                print("Please provide the size of the deck you would like to make.")
 
-        # Making a copy of the deck to remember what it looked like before it was shuffled.
-        self.original_state = self.cards
+        self.number_of_cards = len(self.cards)
+        self.original_state = self.cards # Creating a copy of the deck to remember what it looked like before it was shuffled.
+        self.shuffle_history = {} # Remembering which shuffle methods were used on the Deck.
+        self.index_movement = {} # Keeping track of how much the indices of the cards moved with each shuffle. TODO: Might need to change this.
+        self.entropy = 0 # A property of the deck that is utilized by the Stats object. TODO: Might remove. It's already a function of the Stats object, and the functionality works there.
 
-        # Remembering which shuffle methods were used on the Deck.
-        self.shuffle_history = {}
+    def _standard_deck(self, number_of_cards: int):
+        """
+        Creates a linearly ordered list of cards.
+        """
 
-        # Keeping track of how much the indices of the cards moved with each shuffle.
-        self.index_movement = {}
+        self.cards = np.linspace(1, number_of_cards, number_of_cards, dtype=int)
+
+    def _preshuffled(self, number_of_cards: int):
+        """
+        Creates a randomly ordered list of cards.
+        """
+
+        _cards = []
+
+        while len(_cards) != number_of_cards:
+            rand_ind = random.randint(1, number_of_cards)
+            if rand_ind not in _cards:
+                _cards.append(rand_ind)
+
+        self.cards = np.asarray(_cards)

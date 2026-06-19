@@ -9,6 +9,8 @@ __creation_date__ = "2024-06-14"
 import numpy as np
 import random
 
+from fivetwo.deck import Deck
+
 from typing import Callable
 
 
@@ -40,18 +42,17 @@ class Shuffler:
             A _wrapper function used to pass the decorator arguments.
             """
 
-            from fivetwo.deck import Deck
-
             # Finding the 'Deck' object in the passed arguments.
             for arg in args:
                 if isinstance(arg, Deck):
                     deck = arg
 
             # Updating the shuffle history with the name of the shuffle method used.
+            shuffle_name = " ".join([_.capitalize() for _ in func.__name__.split("_")])
             try:
-                deck.shuffle_history[" ".join(func.__name__.split("_"))] += 1
+                deck.shuffle_history[shuffle_name] = np.vstack([deck.shuffle_history[shuffle_name], deck.cards])
             except KeyError:
-                deck.shuffle_history[func.__name__] = 1
+                deck.shuffle_history[shuffle_name] = deck.cards
 
             return func(*args)
 
@@ -82,14 +83,12 @@ class Shuffler:
         deck.index_movement = dict(zip(list(shuffled_bins.keys()), index_movement))
 
     @_remember_shuffle
-    def mash_shuffle(self, deck: object):
+    def mash_shuffle(self, deck: object): # TODO BROKEN! Fix this method!
         """
         The deck of cards is split at some randomly chosen index 'n' leaving
         a pile of 'n' cards in stack 'A' and 'self.number_of_cards - n' in
         stack 'B'.
         The two stacks are then combined at an index 'm' of stack 'A'.
-
-        # TODO BROKEN! Fix this method!
         ---
         Parameters:
             deck, object: A deck of cards of variable length.
@@ -156,7 +155,9 @@ class Shuffler:
                                             will be uneven by design.
         """
 
-        # Getting the cards from the deck.
+        self.number_of_piles = number_of_piles
+
+        # Storing the cards from the deck into an easier-to-use variable.
         cards = deck.cards
 
         # Shuffling the cards into 'number_of_piles' equally sized stacks.
