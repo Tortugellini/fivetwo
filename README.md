@@ -2,9 +2,9 @@
 This repository is inspired by a card game that I play.
 As I became more and more familiar with the game, I found myself wondering about all the different methods there are to shuffle a deck and which one randomizes the deck the most, and possibly, how much of an effect these have on the game itself.<br>
 So I decided to model them in the hopes of:
-1. Improving my understanding of the math behind the game I enjoy playing
+1. Improving my understanding of probability theory and randomness
 2. Improving my methods as a Python developer
-3. Just having fun coding. :grin:
+3. Just having fun coding :grin:
 ## Meet the Objects
 Below are short descriptions for each piece of this module.
 ### Deck
@@ -33,5 +33,8 @@ git clone (whatever method you prefer)
 cd fivetwo
 ~~~
 ~~~
-poetry install
+source activate
+~~~
+~~~
+pip install -r requirements.txt
 ~~~
