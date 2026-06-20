@@ -30,11 +30,11 @@ While this is a small pet project, I welcome contribution:
 git clone (whatever method you prefer)
 ~~~
 ~~~
-cd fivetwo
+python -m venv .fivetwo (this will change to be a makefile or something more automatic)
 ~~~
 ~~~
-source activate
+source activate (or whatever method you use to activate )
 ~~~
 ~~~
-pip install -r requirements.txt
+pip install .
 ~~~
