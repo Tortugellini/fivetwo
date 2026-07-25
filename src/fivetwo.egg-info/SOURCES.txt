@@ -1,0 +1,15 @@
+LICENSE
+README.md
+pyproject.toml
+src/fivetwo/__init__.py
+src/fivetwo/deck.py
+src/fivetwo/shuffler.py
+src/fivetwo/stats.py
+src/fivetwo.egg-info/PKG-INFO
+src/fivetwo.egg-info/SOURCES.txt
+src/fivetwo.egg-info/dependency_links.txt
+src/fivetwo.egg-info/requires.txt
+src/fivetwo.egg-info/top_level.txt
+tests/test_deck.py
+tests/test_shuffler.py
+tests/test_stats.py
